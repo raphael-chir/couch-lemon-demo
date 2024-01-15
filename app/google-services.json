@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "709521878527",
+    "project_id": "tuto02-login",
+    "storage_bucket": "tuto02-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709521878527:android:f96c8894a466a13cdf0bca",
+        "android_client_info": {
+          "package_name": "com.raphael.tuto02_login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsj9bRmLN69ZDBzPphiaLZ1otuMpCjNCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
