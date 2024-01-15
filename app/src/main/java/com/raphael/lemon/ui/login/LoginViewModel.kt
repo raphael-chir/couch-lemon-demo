@@ -67,49 +67,4 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
 
         else -> {}
     }
-
-    private fun startReplicator(email: String, password: String) {
-        val replicator =
-            Replicator(
-                ReplicatorConfigurationFactory.newConfig(
-                    collections = mapOf(
-                        DBManager.getInstance()?.get("Offices")!!.collections to null
-                    ),
-                    target = URLEndpoint(URI(Config.SYNC_GATEWAY_BASE_URL)),
-                    type = ReplicatorType.PUSH_AND_PULL,
-                    authenticator = BasicAuthenticator(email, password.toCharArray())
-                )
-            )
-
-        replicator.addChangeListener { change ->
-            change.status.error?.let {
-                Log.d(TAG, "Error code: ${it.code}")
-            }
-        }
-        replicator.start()
-    }
-
-    private fun publicAPILogin(email: String, password: String) {
-        val call = RestClient.appServicesPublicApi.authenticate(User(email, password))
-
-        call.enqueue(object : Callback<Object?> {
-            override fun onResponse(call: Call<Object?>, response: Response<Object?>) {
-                if (response.isSuccessful) {
-                    val post = response.body()
-                    Log.d(TAG, "Successfully connected $email !")
-                } else {
-                    Log.d(TAG, "The response is unsuccessful du to code ${response.code()}")
-                    Log.d(TAG, "Request URL : ${call.request().url()}")
-                    Log.d(TAG, "Request headers : ${call.request().headers()}")
-                    Log.d(TAG, "Request body : ${call.request().body()}")
-                }
-            }
-
-            override fun onFailure(call: Call<Object?>, t: Throwable) {
-                Log.d(TAG, "Handling the failure ...")
-            }
-        })
-    }
-
-
 }
