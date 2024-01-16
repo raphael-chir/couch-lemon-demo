@@ -24,11 +24,12 @@ class DefaultReplicatorServices:ReplicatorServices {
             Replicator(
                 ReplicatorConfigurationFactory.newConfig(
                     collections = mapOf(
-                        DBManager.getInstance()?.get("Offices")!!.collections to null
+                        DBManager.getInstance()!!.get("couchthread").collections to null
                     ),
                     target = URLEndpoint(URI(Config.SYNC_GATEWAY_BASE_URL)),
                     type = ReplicatorType.PUSH_AND_PULL,
-                    authenticator = BasicAuthenticator(login, password.toCharArray())
+                    authenticator = BasicAuthenticator(login, password.toCharArray()),
+                    continuous = true
                 )
             )
 
@@ -38,5 +39,6 @@ class DefaultReplicatorServices:ReplicatorServices {
             }
         }
         replicator.start()
+        Log.d(TAG, "Starting Replicator ...")
     }
 }
