@@ -9,6 +9,7 @@ sealed class Screen{
     object SignupScreen: Screen()
     object TermOfUseScreen : Screen()
     object LoginScreen : Screen()
+    object DashboardScreen : Screen()
 }
 
 object PostOfficeAppRouter {

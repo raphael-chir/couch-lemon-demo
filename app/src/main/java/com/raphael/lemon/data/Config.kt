@@ -11,4 +11,9 @@ object Config {
      * Sync Gateway websocket Base URL connexion
      */
     const val SYNC_GATEWAY_BASE_URL = "wss://8oglzxxdtxfh-icy.apps.cloud.couchbase.com:4984/couchthread"
+
+    /**
+     * Name of the database
+     */
+    const val DB_NAME = "couchthread"
 }

@@ -6,7 +6,7 @@ import com.couchbase.lite.CouchbaseLite
 import com.couchbase.lite.Database
 
 
-class DBManager private constructor (context: Context, debug:Boolean) {
+class DBManager private constructor(context: Context, debug: Boolean) {
 
     companion object {
         //@Volatile
@@ -14,7 +14,7 @@ class DBManager private constructor (context: Context, debug:Boolean) {
 
         private val TAG = DBManager::class.simpleName
 
-        fun init(context: Context, debug:Boolean): DBManager? =
+        fun init(context: Context, debug: Boolean): DBManager? =
             instance ?: synchronized(this) {
                 Log.d(TAG, "create singleton")
                 instance ?: DBManager(context, debug).also { instance = it }
@@ -32,13 +32,13 @@ class DBManager private constructor (context: Context, debug:Boolean) {
 
     private lateinit var database: Database
 
-    private fun init(context: Context, debug:Boolean) {
+    private fun init(context: Context, debug: Boolean) {
         CouchbaseLite.init(context, debug)
-        Log.d(TAG,"CBL Initialized")
+        Log.d(TAG, "CBL Initialized")
     }
 
     // Get a database by dbName, if not exist it will be created
-    public fun get(dbName: String):Database {
+    public fun get(dbName: String): Database {
         database = Database(dbName)
         Log.i(TAG, "Database created $database")
         return database

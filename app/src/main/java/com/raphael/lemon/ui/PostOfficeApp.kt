@@ -6,6 +6,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.raphael.lemon.ui.dashboard.DashboardScreen
 import com.raphael.lemon.ui.theme.navigation.PostOfficeAppRouter
 import com.raphael.lemon.ui.theme.navigation.Screen
 import com.raphael.lemon.ui.login.LoginScreen
@@ -32,6 +33,10 @@ fun PostOfficeApp() {
 
                 is Screen.LoginScreen -> {
                     LoginScreen()
+                }
+
+                is Screen.DashboardScreen -> {
+                    DashboardScreen()
                 }
             }
         }

@@ -3,23 +3,13 @@ package com.raphael.lemon.ui.login
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.couchbase.lite.BasicAuthenticator
-import com.couchbase.lite.Replicator
-import com.couchbase.lite.ReplicatorConfigurationFactory
-import com.couchbase.lite.ReplicatorType
-import com.couchbase.lite.URLEndpoint
-import com.couchbase.lite.newConfig
-import com.raphael.lemon.data.Config
-import com.raphael.lemon.data.appservices.RestClient
-import com.raphael.lemon.data.DBManager
+import com.raphael.lemon.data.CtxManager
 import com.raphael.lemon.data.authentication.AppServicesAuth
-import com.raphael.lemon.data.authentication.User
 import com.raphael.lemon.data.replicator.DefaultReplicatorServices
+import com.raphael.lemon.data.features.DefaultCouchThreadServices
+import com.raphael.lemon.ui.theme.navigation.PostOfficeAppRouter
+import com.raphael.lemon.ui.theme.navigation.Screen
 import com.raphael.lemon.ui.utils.ViewEvent
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.net.URI
 
 class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
 
@@ -50,7 +40,14 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                         val post = response.body()
                         Log.d(TAG, "Successfully connected $email !")
                         DefaultReplicatorServices().start(email, password)
+                        val userDetails = DefaultCouchThreadServices().getUserDetails(email)
+                        CtxManager.get().getUserDetails().value = userDetails
+
+                        val listThreadChannels = DefaultCouchThreadServices().listThreadChannels()
+
+                        CtxManager.get().getThreadChannels().value = listThreadChannels
                         // TODO Go to home page
+                        PostOfficeAppRouter.navigateTo(Screen.DashboardScreen)
                     } else {
                         Log.d(TAG, "The response is unsuccessful du to code ${response.code()}")
                         Log.d(TAG, "Request URL : ${call.request().url()}")
