@@ -61,6 +61,7 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                 },
                 onFailure = { call, t ->
                     Log.d(TAG, "Handling the failure ...")
+                    Log.d(TAG, "Cause ${t.cause}")
                     // TODO auth error 2
                 })
         }

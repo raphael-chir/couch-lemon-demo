@@ -19,7 +19,7 @@ import java.net.URI
  */
 class DefaultReplicatorServices:ReplicatorServices {
 
-    private val TAG = LoginViewModel::class.simpleName
+    private val TAG = DefaultReplicatorServices::class.simpleName
 
     override fun start(login: String, password: String) {
         val replicator =

@@ -1,16 +1,21 @@
 package com.raphael.lemon.data
 
+import android.os.Handler
+import android.util.Log
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.couchbase.lite.Replicator
 import com.raphael.lemon.data.features.ThreadChannel
 import com.raphael.lemon.data.features.UserDetails
+import com.raphael.lemon.data.replicator.DefaultReplicatorServices
+import java.util.Timer
+import java.util.TimerTask
 
 class CtxManager private constructor() {
 
-    //private var threadChannels = mutableStateOf<ArrayList<ThreadChannel>>(arrayListOf())
+    private val TAG = CtxManager::class.simpleName
+
+    private val REPLICATOR_TAG = DefaultReplicatorServices::class.simpleName
 
     private var threadChannels = mutableStateOf<List<ThreadChannel>>(arrayListOf())
 
@@ -35,6 +40,13 @@ class CtxManager private constructor() {
 
     fun setReplicator(replicator: Replicator){
         this.replicator = replicator
+
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                Log.d(REPLICATOR_TAG, replicator.status.activityLevel.name)
+            }
+        },2000,15000)
+
     }
 
     fun getReplicator():Replicator?{
