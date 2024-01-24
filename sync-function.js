@@ -8,7 +8,7 @@ function (doc, oldDoc, meta) {
 
     if (doc.type == "user-details"){
 
-        requireUser(doc.user) // throw error if it doesn't concern the current user
+        requireUser(doc.email) // throw error if it doesn't concern the current user
 
         // Create a personal user channel
         var userChannel = doc.email
@@ -36,14 +36,14 @@ function (doc, oldDoc, meta) {
     else if (doc.type == "thread-channel"){
 
         // Always create 3 channels per thread channel
-        var publisher-channelId = "publisher_" + doc.threadChannelId
-        var read-only-channelId = "read_only" + doc.threadChannelId
-        var react-only-channelId = "react_only_" + doc.threadChannelId
+        var publisherChannel = "publisher_" + doc.threadChannelId
+        var readChannel = "read_only" + doc.threadChannelId
+        var reactChannel = "react_only_" + doc.threadChannelId
 
         // Route
-        channel(publisher-channelId)
-        channel(read-only-channelId)
-        channel(react-only-channelId)
+        channel(publisherChannel)
+        channel(readChannel)
+        channel(reactChannel)
 
         // Update of a doc is just allowed for publisher and react_only
         // Read can't be update because an error is thrown
