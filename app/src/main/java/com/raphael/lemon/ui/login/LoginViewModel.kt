@@ -46,6 +46,9 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                         val listThreadChannels = DefaultCouchThreadServices().listThreadChannels()
 
                         CtxManager.get().getThreadChannels().value = listThreadChannels
+
+                        //DefaultCouchThreadServices().liveQueryExample()
+                        DefaultCouchThreadServices().liveQueryExample(CtxManager.get().getThreadChannels().value)
                         // TODO Go to home page
                         PostOfficeAppRouter.navigateTo(Screen.DashboardScreen)
                     } else {
