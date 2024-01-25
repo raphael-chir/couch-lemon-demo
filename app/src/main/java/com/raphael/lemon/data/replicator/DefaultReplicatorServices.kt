@@ -15,7 +15,9 @@ import com.raphael.lemon.ui.login.LoginViewModel
 import java.net.URI
 
 /**
- * Here is a minimalistic default implementation of ReplicatorServices
+ * @author Raphael CHIR
+ *
+ * Here is a minimalistic default implementation of ReplicatorServices with Couchbase Lite
  */
 class DefaultReplicatorServices:ReplicatorServices {
 

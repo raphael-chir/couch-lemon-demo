@@ -44,10 +44,6 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                         val userDetails = DefaultCouchThreadServices().getUserDetails(email)
                         CtxManager.get().getUserDetails().value = userDetails
 
-                        val listThreadChannels = DefaultCouchThreadServices().listThreadChannels()
-                        CtxManager.get().getThreadChannels().value = listThreadChannels
-
-                        // TODO Go to home page
                         PostOfficeAppRouter.navigateTo(Screen.DashboardScreen)
                     } else {
                         Log.d(TAG, "The response is unsuccessful du to code ${response.code()}")

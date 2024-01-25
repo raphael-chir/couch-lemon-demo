@@ -5,6 +5,11 @@ import com.couchbase.lite.Parameters
 import com.raphael.lemon.data.Config
 import com.raphael.lemon.data.DBManager
 
+/**
+ * @author Raphael CHIR
+ *
+ * Default implementation of CouchThreadServices interface
+ */
 class DefaultCouchThreadServices : CouchThreadServices {
 
     private val TAG = DefaultCouchThreadServices::class.simpleName
@@ -71,7 +76,7 @@ class DefaultCouchThreadServices : CouchThreadServices {
         return threadChannels
     }
 
-    fun listLiveThreadChannels(consume: (threadChannels:List<ThreadChannel>) -> Unit) {
+    override fun listLiveThreadChannels(consume: (threadChannels:List<ThreadChannel>) -> Unit) {
         val database = DBManager.getInstance()?.get(Config.DB_NAME)
         val query = database?.createQuery("select * from _ where type=\"thread-channel\"")
         val threadChannels = arrayListOf<ThreadChannel>()
@@ -93,22 +98,4 @@ class DefaultCouchThreadServices : CouchThreadServices {
             }
         }
     }
-
-    fun listLiveThreadChannel(consume: (title: String?, description: String?) -> Unit) {
-        val database = DBManager.getInstance()?.get(Config.DB_NAME)
-        val query = database?.createQuery("select * from _ where type=\"thread-channel\"")
-
-        val token = query!!.addChangeListener { change ->
-            change.results?.let { rs ->
-                rs.forEach {
-                    Log.d(TAG, "results: ${it.getDictionary(0)?.getString("title")}")
-                    consume(
-                        it.getDictionary(0)?.getString("title"),
-                        it.getDictionary(0)?.getString("description")
-                    )
-                }
-            }
-        }
-    }
-
 }

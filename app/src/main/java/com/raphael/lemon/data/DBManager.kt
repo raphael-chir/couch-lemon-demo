@@ -43,5 +43,4 @@ class DBManager private constructor(context: Context, debug: Boolean) {
         Log.i(TAG, "Database created $database")
         return database
     }
-
 }
