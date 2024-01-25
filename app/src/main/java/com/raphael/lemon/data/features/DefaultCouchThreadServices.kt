@@ -1,12 +1,7 @@
 package com.raphael.lemon.data.features
 
 import android.util.Log
-import com.couchbase.lite.Collection
-import com.couchbase.lite.DataSource
-import com.couchbase.lite.Expression
 import com.couchbase.lite.Parameters
-import com.couchbase.lite.QueryBuilder
-import com.couchbase.lite.SelectResult
 import com.raphael.lemon.data.Config
 import com.raphael.lemon.data.DBManager
 
@@ -27,10 +22,34 @@ class DefaultCouchThreadServices : CouchThreadServices {
             val next = resultSet?.next()
             userDetails = UserDetails(
                 next?.getDictionary(0)?.getString("email"),
-                next?.getDictionary(0)?.getString("name"))
+                next?.getDictionary(0)?.getString("name")
+            )
         }
 
         return userDetails
+    }
+
+    override fun getLiveUserDetails(email: String?, consume: (value: String?) -> Unit) {
+        val database = DBManager.getInstance()?.get(Config.DB_NAME)
+        val userDetails: UserDetails
+        val query = database?.createQuery("select * from _ where type=\$pType and email=\$pEmail")
+        val parameters = Parameters()
+        parameters.setValue("pType", "user-details")
+        parameters.setValue("pEmail", email)
+        query?.parameters = parameters
+
+        val token = query!!.addChangeListener { change ->
+            change.results?.let { rs ->
+                rs.forEach {
+                    //userDetails.email.apply { it?.getDictionary(0)?.getString("email") }
+                    consume(it?.getDictionary(0)?.getString("name"))
+
+                    it?.getDictionary(0)?.getString("email")
+                    it?.getDictionary(0)?.getString("name")
+
+                }
+            }
+        }
     }
 
     override fun listThreadChannels(): List<ThreadChannel> {
@@ -52,17 +71,17 @@ class DefaultCouchThreadServices : CouchThreadServices {
         return threadChannels
     }
 
-    fun liveQueryExample(threadChannels : List<ThreadChannel>) {
+    fun listLiveThreadChannels(consume: (threadChannels:List<ThreadChannel>) -> Unit) {
         val database = DBManager.getInstance()?.get(Config.DB_NAME)
-        val query = database?.createQuery("select * from _ where type=\"channel\"")
-        threadChannels as ArrayList<ThreadChannel>
+        val query = database?.createQuery("select * from _ where type=\"thread-channel\"")
+        val threadChannels = arrayListOf<ThreadChannel>()
         // Adds a query change listener.
         // Changes will be posted on the main queue.
         val token = query!!.addChangeListener { change ->
             change.results?.let { rs ->
                 threadChannels.clear()
                 rs.forEach {
-                    Log.d(TAG,"results: ${it.getDictionary(0)?.getString("title")}")
+                    Log.d(TAG, "results: ${it.getDictionary(0)?.getString("title")}")
                     threadChannels.add(
                         ThreadChannel(
                             title = it.getDictionary(0)?.getString("title"),
@@ -70,23 +89,26 @@ class DefaultCouchThreadServices : CouchThreadServices {
                         )
                     )
                 }
+                consume(threadChannels)
             }
         }
     }
 
-    fun liveQueryExample() {
+    fun listLiveThreadChannel(consume: (title: String?, description: String?) -> Unit) {
         val database = DBManager.getInstance()?.get(Config.DB_NAME)
-        val query = database?.createQuery("select * from _ where type=\"channel\"")
+        val query = database?.createQuery("select * from _ where type=\"thread-channel\"")
 
-        // Adds a query change listener.
-        // Changes will be posted on the main queue.
         val token = query!!.addChangeListener { change ->
             change.results?.let { rs ->
                 rs.forEach {
-                    Log.d(TAG,"results: ${it.getDictionary(0)?.getString("title")}")
-                    /* Update UI */
+                    Log.d(TAG, "results: ${it.getDictionary(0)?.getString("title")}")
+                    consume(
+                        it.getDictionary(0)?.getString("title"),
+                        it.getDictionary(0)?.getString("description")
+                    )
                 }
             }
         }
     }
+
 }

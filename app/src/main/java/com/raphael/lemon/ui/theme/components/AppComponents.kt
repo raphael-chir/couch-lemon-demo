@@ -61,6 +61,7 @@ import com.raphael.lemon.R
 @Composable
 fun NormalTextComponent(value: String) {
     Text(
+
         text = value, modifier = Modifier
             .fillMaxWidth()
             .heightIn(8.dp), style = TextStyle(

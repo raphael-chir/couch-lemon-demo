@@ -37,18 +37,16 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                 email, password,
                 onResponse = { call, response ->
                     if (response.isSuccessful) {
-                        val post = response.body()
                         Log.d(TAG, "Successfully connected $email !")
+
                         DefaultReplicatorServices().start(email, password)
+
                         val userDetails = DefaultCouchThreadServices().getUserDetails(email)
                         CtxManager.get().getUserDetails().value = userDetails
 
                         val listThreadChannels = DefaultCouchThreadServices().listThreadChannels()
-
                         CtxManager.get().getThreadChannels().value = listThreadChannels
 
-                        //DefaultCouchThreadServices().liveQueryExample()
-                        DefaultCouchThreadServices().liveQueryExample(CtxManager.get().getThreadChannels().value)
                         // TODO Go to home page
                         PostOfficeAppRouter.navigateTo(Screen.DashboardScreen)
                     } else {

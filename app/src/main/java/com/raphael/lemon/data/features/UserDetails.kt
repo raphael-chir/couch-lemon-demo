@@ -1,7 +1,7 @@
 package com.raphael.lemon.data.features
 
 data class UserDetails(
-    val email: String?, val name: String?
+    var email: String?, val name: String?
 ) {
     constructor() : this("", "")
 }
