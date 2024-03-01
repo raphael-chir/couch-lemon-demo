@@ -35,4 +35,23 @@ class AppServicesAuth : AuthServices {
         })
     }
 
+    override fun disconnect(
+        sessionId: String,
+        onResponse: (call: Call<Object?>, response: Response<Object?>) -> Unit,
+        onFailure: (call: Call<Object?>, t: Throwable) -> Unit
+    ) {
+        val call = RestClient.appServicesPublicApi.disconnect(sessionId)
+
+        call.enqueue(object : Callback<Object?> {
+            override fun onResponse(call: Call<Object?>, response: Response<Object?>) {
+                onResponse(call, response)
+            }
+
+            override fun onFailure(call: Call<Object?>, t: Throwable) {
+                onFailure(call, t)
+            }
+        })
+
+    }
+
 }

@@ -6,7 +6,7 @@ package com.raphael.lemon.data.features
  * Immutable UserDetails bean
  */
 data class UserDetails(
-    var email: String?, val name: String?
+    var email: String?, var name: String?
 ) {
     constructor() : this("", "")
 }

@@ -44,6 +44,11 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                         val userDetails = DefaultCouchThreadServices().getUserDetails(email)
                         CtxManager.get().getUserDetails().value = userDetails
 
+                        var sessionInfos = response.headers().get("set-cookie").toString()
+                        sessionInfos= sessionInfos.split(";")[0]
+                        sessionInfos = sessionInfos.split("=")[1]
+                        CtxManager.get().geSessionId().value = sessionInfos
+
                         PostOfficeAppRouter.navigateTo(Screen.DashboardScreen)
                     } else {
                         Log.d(TAG, "The response is unsuccessful du to code ${response.code()}")

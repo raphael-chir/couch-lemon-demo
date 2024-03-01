@@ -11,4 +11,10 @@ interface AuthServices {
         onResponse: (call: Call<Object?>, response: Response<Object?>) -> Unit,
         onFailure: (call: Call<Object?>, t: Throwable) -> Unit
     )
+
+    fun disconnect(
+        sessionId: String,
+        onResponse: (call: Call<Object?>, response: Response<Object?>) -> Unit,
+        onFailure: (call: Call<Object?>, t: Throwable) -> Unit
+    )
 }

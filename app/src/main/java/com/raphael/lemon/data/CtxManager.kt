@@ -19,6 +19,8 @@ class CtxManager private constructor() {
 
     private var replicator: Replicator? = null
 
+    private var sessionId = mutableStateOf(String())
+
     companion object {
         private val instance: CtxManager by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { CtxManager() }
         fun get(): CtxManager {
@@ -28,6 +30,10 @@ class CtxManager private constructor() {
 
     fun getUserDetails():MutableState<UserDetails>{
         return userDetails
+    }
+
+    fun geSessionId():MutableState<String>{
+        return sessionId
     }
 
     fun setReplicator(replicator: Replicator){
@@ -42,5 +48,13 @@ class CtxManager private constructor() {
 
     fun getReplicator():Replicator?{
         return this.replicator
+    }
+
+    fun clear(){
+        userDetails.value.email = ""
+        userDetails.value.name = ""
+        sessionId.value = ""
+        this.replicator?.stop()
+        replicator = null
     }
 }

@@ -23,7 +23,7 @@ class DashboardViewModel : ViewModel(), ViewEvent<DashboardViewEvent> {
         DefaultCouchThreadServices().getLiveUserDetails(
             CtxManager.get().getUserDetails().value.email
         ) {
-            dashboardViewState.value = dashboardViewState.value.copy(it.toString())
+            dashboardViewState.value = dashboardViewState.value.copy(userName = it.toString())
         }
 
         // Live update of list of subscribed thread channels
