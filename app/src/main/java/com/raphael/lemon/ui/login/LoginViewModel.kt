@@ -49,6 +49,7 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                         sessionInfos = sessionInfos.split("=")[1]
                         CtxManager.get().geSessionId().value = sessionInfos
 
+                        this.clear()
                         PostOfficeAppRouter.navigateTo(Screen.DashboardScreen)
                     } else {
                         Log.d(TAG, "The response is unsuccessful du to code ${response.code()}")
@@ -66,5 +67,9 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
         }
 
         else -> {}
+    }
+
+    fun clear(){
+        loginViewState.value = LoginViewState()
     }
 }
