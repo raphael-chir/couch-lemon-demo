@@ -33,3 +33,6 @@ For separation of concerns and to keep it simple (stupid). 2 main packages are s
       - **xxxViewState** the ui model bean keep the state
       - **xxxViewEvent** event declaration
 - **data** is the package which ui depends. It contains services and infrastructure interface and implementations.
+
+## Troubleshot
+- Don't use a Google Play Tag image in order to use adb root

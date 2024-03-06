@@ -17,11 +17,11 @@ class DashboardViewModel : ViewModel(), ViewEvent<DashboardViewEvent> {
 
     init {
 
-        Log.d(TAG, "Dashboard view is initiated with user : ${dashboardViewState.value.userName}")
+        Log.d(TAG, "Dashboard view is initiated with user : ${CtxManager.get().getUserEmail().value}")
 
         // Live update of user specific information
         DefaultCouchThreadServices().getLiveUserDetails(
-            CtxManager.get().getUserDetails().value.email
+            CtxManager.get().getUserEmail().value
         ) {
             dashboardViewState.value = dashboardViewState.value.copy(userName = it.toString())
         }

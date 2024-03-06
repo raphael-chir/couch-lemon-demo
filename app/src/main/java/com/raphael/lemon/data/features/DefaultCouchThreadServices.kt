@@ -46,12 +46,7 @@ class DefaultCouchThreadServices : CouchThreadServices {
         val token = query!!.addChangeListener { change ->
             change.results?.let { rs ->
                 rs.forEach {
-                    //userDetails.email.apply { it?.getDictionary(0)?.getString("email") }
                     consume(it?.getDictionary(0)?.getString("name"))
-
-                    it?.getDictionary(0)?.getString("email")
-                    it?.getDictionary(0)?.getString("name")
-
                 }
             }
         }

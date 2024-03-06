@@ -15,7 +15,7 @@ class CtxManager private constructor() {
 
     private val REPLICATOR_TAG = DefaultReplicatorServices::class.simpleName
 
-    private var userDetails = mutableStateOf(UserDetails())
+    private var userEmail = mutableStateOf(String())
 
     private var replicator: Replicator? = null
 
@@ -28,8 +28,8 @@ class CtxManager private constructor() {
         }
     }
 
-    fun getUserDetails():MutableState<UserDetails>{
-        return userDetails
+    fun getUserEmail():MutableState<String>{
+        return userEmail
     }
 
     fun geSessionId():MutableState<String>{
@@ -51,8 +51,7 @@ class CtxManager private constructor() {
     }
 
     fun clear(){
-        userDetails.value.email = ""
-        userDetails.value.name = ""
+        userEmail.value = ""
         sessionId.value = ""
         this.replicator?.stop()
         replicator = null

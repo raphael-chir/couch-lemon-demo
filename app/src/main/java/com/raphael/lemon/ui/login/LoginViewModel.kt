@@ -38,11 +38,9 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                 onResponse = { call, response ->
                     if (response.isSuccessful) {
                         Log.d(TAG, "Successfully connected $email !")
-
                         DefaultReplicatorServices().start(email, password)
 
-                        val userDetails = DefaultCouchThreadServices().getUserDetails(email)
-                        CtxManager.get().getUserDetails().value = userDetails
+                        CtxManager.get().getUserEmail().value = email
 
                         var sessionInfos = response.headers().get("set-cookie").toString()
                         sessionInfos= sessionInfos.split(";")[0]
