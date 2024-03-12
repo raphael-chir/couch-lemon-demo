@@ -32,5 +32,5 @@ interface CouchThreadServices {
      */
     fun listLiveThreadChannels(consume: (threadChannels:List<ThreadChannel>) -> Unit)
 
-    
+    fun log()
 }

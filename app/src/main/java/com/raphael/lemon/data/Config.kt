@@ -5,12 +5,12 @@ object Config {
     /**
      * App Services Rest API Endpoint
      */
-    const val APPSERVICES_REST_BASE_URL = "https://vq2zxtqxg485epx6.apps.cloud.couchbase.com:4984/couchthread/"
+    const val APPSERVICES_REST_BASE_URL = "https://lrnewjgdqsi7vme.apps.cloud.couchbase.com:4984/couchthread/"
 
     /**
      * Sync Gateway websocket Base URL connexion
      */
-    const val SYNC_GATEWAY_BASE_URL = "wss://vq2zxtqxg485epx6.apps.cloud.couchbase.com:4984/couchthread"
+    const val SYNC_GATEWAY_BASE_URL = "wss://lrnewjgdqsi7vme.apps.cloud.couchbase.com:4984/couchthread"
 
     /**
      * Name of the database

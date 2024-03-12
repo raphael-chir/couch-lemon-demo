@@ -5,15 +5,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.raphael.lemon.data.CtxManager
 import com.raphael.lemon.data.authentication.AppServicesAuth
+import com.raphael.lemon.data.features.CouchThreadServices
 import com.raphael.lemon.data.replicator.DefaultReplicatorServices
 import com.raphael.lemon.data.features.DefaultCouchThreadServices
+import com.raphael.lemon.data.replicator.ReplicatorServices
 import com.raphael.lemon.ui.theme.navigation.PostOfficeAppRouter
 import com.raphael.lemon.ui.theme.navigation.Screen
 import com.raphael.lemon.ui.utils.ViewEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
+@HiltViewModel
+class LoginViewModel @Inject constructor() : ViewModel(), ViewEvent<LoginViewEvent> {
 
     private val TAG = LoginViewModel::class.simpleName
+
+    @Inject
+    lateinit var replicatorServices: ReplicatorServices
 
     val loginViewState = mutableStateOf(LoginViewState())
 
@@ -38,7 +46,7 @@ class LoginViewModel : ViewModel(), ViewEvent<LoginViewEvent> {
                 onResponse = { call, response ->
                     if (response.isSuccessful) {
                         Log.d(TAG, "Successfully connected $email !")
-                        DefaultReplicatorServices().start(email, password)
+                        replicatorServices.start(email, password)
 
                         CtxManager.get().getUserEmail().value = email
 
